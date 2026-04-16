@@ -12,6 +12,8 @@ model (DETR — Detection Transformer).
 - PyTorch 2.0+
 - Transformers 4.35+
 
+Install all dependencies:
+
 ---
 
 ## Installation
@@ -54,7 +56,7 @@ pythonProject/
 ### Detect tables in a local image file
 
 ```python
-from table_detector import TableDetector
+from TableDetector import TableDetector
 
 detector = TableDetector()
 
@@ -71,7 +73,7 @@ for detection in results:
 ### Detect tables from a URL
 
 ```python
-from table_detector import TableDetector
+from TableDetector import TableDetector
 
 detector = TableDetector()
 results = detector.predict_from_url("https://example.com/bank_statement.png", threshold=0.9)

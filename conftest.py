@@ -61,7 +61,7 @@ def mock_detector():
     Return a TableDetector whose HuggingFace model and processor are fully
     mocked so no network calls or GPU are required.
     """
-    from table_detector import TableDetector
+    from TableDetector import TableDetector
 
     id2label = {0: "table", 1: "table rotated"}
 
