@@ -70,6 +70,9 @@ for detection in results:
     )
 ```
 
+> To test with a real image, a sample image is included in the project folder.
+> Run `python run_test.py` to see detections on that image.
+
 ### Detect tables from a URL
 
 ```python
