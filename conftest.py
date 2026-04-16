@@ -8,6 +8,10 @@ from unittest.mock import MagicMock, patch
 import torch
 
 
+# ---------------------------------------------------------------------------
+# Helpers to build fake model outputs
+# ---------------------------------------------------------------------------
+
 def _make_detection_output(scores, labels, boxes):
     """Build a mock post_process result dict."""
     return {
@@ -16,6 +20,10 @@ def _make_detection_output(scores, labels, boxes):
         "boxes": torch.tensor(boxes, dtype=torch.float32),
     }
 
+
+# ---------------------------------------------------------------------------
+# Shared image fixtures
+# ---------------------------------------------------------------------------
 
 @pytest.fixture
 def invoice_image(tmp_path):
@@ -42,13 +50,18 @@ def corrupted_image(tmp_path):
     path.write_bytes(b"this is not image data \x00\x01\x02")
     return str(path)
 
+
+# ---------------------------------------------------------------------------
+# Mock model fixture — patches both from_pretrained calls at once
+# ---------------------------------------------------------------------------
+
 @pytest.fixture
 def mock_detector():
     """
     Return a TableDetector whose HuggingFace model and processor are fully
     mocked so no network calls or GPU are required.
     """
-    from TableDetector import TableDetector
+    from table_detector import TableDetector
 
     id2label = {0: "table", 1: "table rotated"}
 
