@@ -251,7 +251,7 @@ class TestUrlErrorHandling:
         mock_response = MagicMock()
         mock_response.raise_for_status.side_effect = requests.HTTPError("404 Not Found")
 
-        with patch("table_detector.requests.get", return_value=mock_response):
+        with patch("TableDetector.requests.get", return_value=mock_response):
             with pytest.raises(requests.HTTPError):
                 detector.predict_from_url("http://example.com/missing.png")
 
@@ -269,8 +269,8 @@ class TestUrlErrorHandling:
         mock_response.raise_for_status.return_value = None
         mock_response.raw = buf
 
-        with patch("table_detector.requests.get", return_value=mock_response):
-            with patch("table_detector.Image.open", return_value=fake_image):
+        with patch("TableDetector.requests.get", return_value=mock_response):
+            with patch("TableDetector.Image.open", return_value=fake_image):
                 results = detector.predict_from_url("http://example.com/doc.png")
 
         assert len(results) == 1
@@ -291,8 +291,8 @@ class TestModelInitialisation:
 
     def test_loads_correct_model(self):
         with (
-            patch("table_detector.DetrImageProcessor.from_pretrained") as mock_proc,
-            patch("table_detector.DetrForObjectDetection.from_pretrained") as mock_mdl,
+            patch("TableDetector.DetrImageProcessor.from_pretrained") as mock_proc,
+            patch("TableDetector.DetrForObjectDetection.from_pretrained") as mock_mdl,
         ):
             mock_mdl.return_value = MagicMock(eval=MagicMock())
             TableDetector()
@@ -301,8 +301,8 @@ class TestModelInitialisation:
 
     def test_model_set_to_eval_mode(self):
         with (
-            patch("table_detector.DetrImageProcessor.from_pretrained"),
-            patch("table_detector.DetrForObjectDetection.from_pretrained") as mock_mdl,
+            patch("TableDetector.DetrImageProcessor.from_pretrained"),
+            patch("TableDetector.DetrForObjectDetection.from_pretrained") as mock_mdl,
         ):
             mock_instance = MagicMock()
             mock_mdl.return_value = mock_instance
